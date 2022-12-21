@@ -31,12 +31,17 @@ const main = async () => {
 const checkVersion = async (app, gist) => {
   console.log("[*] checkVersion");
   var app = app[0];
+
   app["submission_start_date"] = gist.submission_start_date;
+
   var currentDay = app.app_store_version_phased_release.current_day_number
   var phased_release_state = app.app_store_version_phased_release.phased_release_state
   app["phase_percentage"] = calculatePercentage(currentDay, phased_release_state)
 
-  if (!app.appID || phased_release_state != gist.app_store_version_phased_release.phased_release_state || app.status != gist.status || app.app_store_version_phased_release.current_day_number != gist.app_store_version_phased_release.current_day_number) {
+  var isEqualPhasesState = app.app_store_version_phased_release.phased_release_state == gist.app_store_version_phased_release.phased_release_state
+  var isEqualPhasesDay = app.app_store_version_phased_release.current_day_number == gist.app_store_version_phased_release.current_day_number
+
+  if (!app.appID || !isEqualPhasesState || app.status != gist.status || !isEqualPhasesDay) {
     console.log("[*] status is different");
 
     var submission_start_date = gist.submission_start_date
