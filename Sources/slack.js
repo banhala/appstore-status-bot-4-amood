@@ -38,7 +38,7 @@ async function hook(message, attachment) {
 
 function slackAttachment(appInfo, submissionStartDate) {
   const attachment = {
-    fallback: `The status of your app ${appInfo.name} has been changed to ${appInfo.status}`,
+    fallback: `@ch-ios @qa-group The status of your app ${appInfo.name} has been changed to ${appInfo.status}`,
     color: colorForStatus(appInfo.status),
     title: "App Store Connect",
     author_name: appInfo.name,
