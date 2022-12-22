@@ -41,7 +41,7 @@ const checkVersion = async (app, gist) => {
   var isEqualPhasesState = app.app_store_version_phased_release.phased_release_state == gist.app_store_version_phased_release.phased_release_state
   var isEqualPhasesDay = app.app_store_version_phased_release.current_day_number == gist.app_store_version_phased_release.current_day_number
 
-  if (!app.appID || !isEqualPhasesState || app.status != gist.status || !isEqualPhasesDay) {
+  if (!app.appID || !isEqualPhasesState || app.status != gist.status || (!isEqualPhasesDay && phased_release_state == "ACTIVE")) {
     console.log("[*] status is different");
 
     var submission_start_date = gist.submission_start_date
