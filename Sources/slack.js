@@ -46,11 +46,6 @@ function slackAttachment(appInfo, submissionStartDate) {
     title_link: `https://appstoreconnect.apple.com/apps/${appInfo.appID}/appstore`,
     fields: [
       {
-        title: "",
-        value: "@ch-ios @qa-group",
-        short: true,
-      },
-      {
         title: i18n.__("Version"),
         value: appInfo.version,
         short: true,
