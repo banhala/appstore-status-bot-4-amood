@@ -36,7 +36,7 @@ const checkVersion = async (app, gist) => {
 
   var currentDay = app.app_store_version_phased_release.current_day_number
   var phased_release_state = app.app_store_version_phased_release.phased_release_state
-  app["phase_percentage"] = calculatePercentage(currentDay, phased_release_state)
+  app["phase_percentage"] = calculatePercentage(currentDay, phased_release_state, app.status)
 
   var isEqualPhasesState = app.app_store_version_phased_release.phased_release_state == gist.app_store_version_phased_release.phased_release_state
   var isEqualPhasesDay = app.app_store_version_phased_release.current_day_number == gist.app_store_version_phased_release.current_day_number
@@ -59,7 +59,10 @@ const checkVersion = async (app, gist) => {
 
   await updateGist(app);
 };
-const calculatePercentage = (currentDay, phased_release_state) => {
+const calculatePercentage = (currentDay, phased_release_state, status) => {
+  if (status != "Ready for sale") {
+    return "배포 전 입니다."
+  }
   if (phased_release_state == "COMPLETE") {
     return "점진적 배포가 완료되었습니다."
   }
