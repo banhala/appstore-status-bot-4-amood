@@ -59,9 +59,54 @@ const checkVersion = async (app, gist) => {
 
   await updateGist(app);
 };
-const calculatePercentage = (currentDay, phased_release_state, status) => {
+const generateMessage = (app, phased_release_state, status) => {
+  if (status == "Prepare for submission") {
+    return "제출 준비 중"
+  }
+  if (status == "Waiting for review") {
+    return "심사 대기 중"
+  }
+  if (status == "In review") {
+    return "심사 중"
+  }
+  if (status == "Pending contract") {
+    return "대기 중인 계약"
+  }
+  if (status == "Waiting for export compliance") {
+    return "수출 규정 관련 문서 승인 대기중"
+  }
+  if (status == "Pending developer release") {
+    return "개발자 출시 대기 중"
+  }
+  if (status == "Processing for app store") {
+    return "App Store 판매 준비중"
+  }
+  if (status == "Pending apple release") {
+    return "대기중인 앱 이전"
+  }
+  if (status == "Ready for sale") {
+    return "판매 준비됨"
+  }
+  if (status == "Rejected") {
+    return "거부됨"
+  }
+  if (status == "Metadata rejected") {
+    return "메타데이터가 거부됨"
+  }
+  if (status == "Removed from sale") {
+    return "판매가 중단됨"
+  }
+  if (status == "Developer rejected") {
+    return "개발자가 취소함"
+  }
+  if (status == "Developer removed from sale") {
+    return "개발자가 판매를 중단함"
+  }
+  if (status == "Invalid binary") {
+    return "유효하지 않은 바이너리"
+  }
   if (status != "Ready for sale") {
-    return "배포 전 입니다."
+    return "앱이 판매 준비중이 아님"
   }
   if (phased_release_state == "COMPLETE") {
     return "점진적 배포가 완료되었습니다."
@@ -71,6 +116,43 @@ const calculatePercentage = (currentDay, phased_release_state, status) => {
   }
   if (phased_release_state != "ACTIVE") {
     return "점진적 배포 진행중이 아닙니다."
+  }
+  if (currentDay == 1) {
+    return "점진적 배포가 1%로 진행 중입니다."
+  }
+  if (currentDay == 2) {
+    return "점진적 배포가 2%로 진행 중입니다."
+  }
+  if (currentDay == 3) {
+    return "점진적 배포가 5%로 진행 중입니다."
+  }
+  if (currentDay == 4) {
+    return "점진적 배포가 10%로 진행 중입니다."
+  }
+  if (currentDay == 5) {
+    return "점진적 배포가 20%로 진행 중입니다."
+  }
+  if (currentDay == 6) {
+    return "점진적 배포가 50%로 진행 중입니다."
+  }
+  if (currentDay == 7) {
+    return "점진적 배포가 100%로 진행 중입니다."
+  }
+  return "점진적 배포 진행중이 아닙니다."
+};
+
+const calculatePercentage = (currentDay, phased_release_state, status) => {
+  if (status != "Ready for sale") {
+    return "Before Deployment"
+  }
+  if (phased_release_state == "COMPLETE") {
+    return "Gradual deployment completed"
+  }
+  if (phased_release_state == "PAUSED") {
+     return "Progressive deployment disruption"
+  }
+  if (phased_release_state != "ACTIVE") {
+    return "Progressive deployment not in progress"
   }
   if (currentDay == 1) {
     return "1%"
@@ -93,7 +175,7 @@ const calculatePercentage = (currentDay, phased_release_state, status) => {
   if (currentDay == 7) {
     return "100%"
   }
-  return "점진적 배포 진행중이 아닙니다."
+  return "Progressive deployment not in progress"
 };
 
 const getGist = async () => {
