@@ -36,8 +36,8 @@ const checkVersion = async (app, gist) => {
 
   var currentDay = app.app_store_version_phased_release.current_day_number
   var phased_release_state = app.app_store_version_phased_release.phased_release_state
-  app["phase_percentage"] = calculatePercentage(currentDay, phased_release_state, app.status)
-
+  var generated_message = generateMessage(currentDay, phased_release_state, app.status)
+  app["generated_message"] = "<!subteam^S01DBJMNK4P> <!subteam^S03TPMY9EKH> 애플 심사 상태:" + generated_message
   var isEqualPhasesState = app.app_store_version_phased_release.phased_release_state == gist.app_store_version_phased_release.phased_release_state
   var isEqualPhasesDay = app.app_store_version_phased_release.current_day_number == gist.app_store_version_phased_release.current_day_number
 
@@ -61,52 +61,49 @@ const checkVersion = async (app, gist) => {
 };
 const generateMessage = (app, phased_release_state, status) => {
   if (status == "Prepare for submission") {
-    return "제출 준비 중"
+    return "제출 준비 중입니다."
   }
   if (status == "Waiting for review") {
-    return "심사 대기 중"
+    return "심사 대기 중입니다."
   }
   if (status == "In review") {
-    return "심사 중"
+    return "심사 중입니다."
   }
   if (status == "Pending contract") {
-    return "대기 중인 계약"
+    return "대기 중인 계약입니다."
   }
   if (status == "Waiting for export compliance") {
-    return "수출 규정 관련 문서 승인 대기중"
+    return "수출 규정 관련 문서 승인 대기중입니다."
   }
   if (status == "Pending developer release") {
-    return "개발자 출시 대기 중"
+    return "개발자 출시 대기 중입니다."
   }
   if (status == "Processing for app store") {
-    return "App Store 판매 준비중"
+    return "App Store 판매 준비중입니다."
   }
   if (status == "Pending apple release") {
-    return "대기중인 앱 이전"
-  }
-  if (status == "Ready for sale") {
-    return "판매 준비됨"
+    return "앱 승인 대기 중입니다."
   }
   if (status == "Rejected") {
-    return "거부됨"
+    return "앱 승인이 거부되었습니다."
   }
   if (status == "Metadata rejected") {
-    return "메타데이터가 거부됨"
+    return "메타데이터가 거부되었습니다."
   }
   if (status == "Removed from sale") {
-    return "판매가 중단됨"
+    return "판매가 중단되었습니다."
   }
   if (status == "Developer rejected") {
-    return "개발자가 취소함"
+    return "개발자가 취소했습니다."
   }
   if (status == "Developer removed from sale") {
-    return "개발자가 판매를 중단함"
+    return "개발자가 판매를 중단했습니다."
   }
   if (status == "Invalid binary") {
-    return "유효하지 않은 바이너리"
+    return "유효하지 않은 바이너리로 인해 거절되었습니다."
   }
   if (status != "Ready for sale") {
-    return "앱이 판매 준비중이 아님"
+    return "앱이 판매 준비중이 아닙니다."
   }
   if (phased_release_state == "COMPLETE") {
     return "점진적 배포가 완료되었습니다."
