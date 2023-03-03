@@ -45,8 +45,10 @@ const checkVersion = async (app, gist) => {
   //   gist.app_store_version_phased_release.current_day_number;
   // var generated_message = generateMessage(currentDay, phased_release_state, app.status);
   var generated_message = generateMessage(0, "", app.status);
+  // app["generated_message"] =
+  //   "<!subteam^S048LKCDTDK> 애플 심사 상태: " + generated_message;
   app["generated_message"] =
-    "<!subteam^S048LKCDTDK> 애플 심사 상태: " + generated_message;
+    "<!subteam^S048LKCDTDK> 앱 스토어 심사 상태가 변경되었습니다.";
 
   if (
     !app.appID ||
