@@ -50,8 +50,8 @@ const checkVersion = async (app, gist) => {
 
   if (
     !app.appID ||
-    !isEqualPhasesState ||
     app.status != gist.status
+    // !isEqualPhasesState
     // (!isEqualPhasesDay && phased_release_state == "ACTIVE")
   ) {
     console.log("[*] status is different");
