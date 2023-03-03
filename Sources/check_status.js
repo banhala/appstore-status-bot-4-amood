@@ -34,28 +34,25 @@ const checkVersion = async (app, gist) => {
 
   app["submission_start_date"] = gist.submission_start_date;
 
-  var currentDay = app.app_store_version_phased_release.current_day_number;
-  var phased_release_state =
-    app.app_store_version_phased_release.phased_release_state;
-  var isEqualPhasesState =
-    app.app_store_version_phased_release.phased_release_state ==
-    gist.app_store_version_phased_release.phased_release_state;
-  var isEqualPhasesDay =
-    app.app_store_version_phased_release.current_day_number ==
-    gist.app_store_version_phased_release.current_day_number;
-  var generated_message = generateMessage(
-    currentDay,
-    phased_release_state,
-    app.status
-  );
+  // var currentDay = app.app_store_version_phased_release.current_day_number;
+  // var phased_release_state =
+  //   app.app_store_version_phased_release.phased_release_state;
+  // var isEqualPhasesState =
+  //   app.app_store_version_phased_release.phased_release_state ==
+  //   gist.app_store_version_phased_release.phased_release_state;
+  // var isEqualPhasesDay =
+  //   app.app_store_version_phased_release.current_day_number ==
+  //   gist.app_store_version_phased_release.current_day_number;
+  // var generated_message = generateMessage(currentDay, phased_release_state, app.status);
+  var generated_message = generateMessage(0, "", app.status);
   app["generated_message"] =
     "<!subteam^S048LKCDTDK> 애플 심사 상태: " + generated_message;
 
   if (
     !app.appID ||
     !isEqualPhasesState ||
-    app.status != gist.status ||
-    (!isEqualPhasesDay && phased_release_state == "ACTIVE")
+    app.status != gist.status
+    // (!isEqualPhasesDay && phased_release_state == "ACTIVE")
   ) {
     console.log("[*] status is different");
 
@@ -117,9 +114,12 @@ const generateMessage = (currentDay, phased_release_state, status) => {
   if (status == "Invalid binary") {
     return "유효하지 않은 바이너리로 인해 거절되었습니다.";
   }
-  if (status != "Ready for sale") {
-    return "앱이 판매 준비중이 아닙니다.";
+  if (status == "Ready for sale") {
+    return "출시됨.";
   }
+
+  return "미확인";
+
   if (phased_release_state == "COMPLETE") {
     return "점진적 배포가 완료되었습니다.";
   }
