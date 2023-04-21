@@ -48,7 +48,7 @@ const checkVersion = async (app, gist) => {
   // app["generated_message"] =
   //   "<!subteam^S048LKCDTDK> 애플 심사 상태: " + generated_message;
   app["generated_message"] =
-    "<!subteam^S048LKCDTDK> 앱 스토어 심사 상태가 변경되었습니다.";
+    "<!subteam^S048LKCDTDK> <!subteam^S0543KC02JJ> 앱 스토어 심사 상태가 변경되었습니다.";
 
   if (
     !app.appID ||
